@@ -287,7 +287,4 @@ function epochdate_(thisdate) {
   var dDate = Date.parse(thisdate).toString();
 //  var dDate = (thisdate).toString();
   return dDate;     //.toString();
-//  slog(dDate);
-//  var datestr = new Date(dDate).toDateString();
-//  slog(datestr);
 }
