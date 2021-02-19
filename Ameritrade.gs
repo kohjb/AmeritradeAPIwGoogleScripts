@@ -23,8 +23,9 @@ function amtd_backfromPane(d) {
 /**
  * Call Ameritrade API to get the closing price of stockSymbol.
  *
- * @param {string} the stock's symbol
+ * @param {string} stockSymbol the stock's symbol
  * @return {number} the closing price
+ * @customfunction
  */
  function amtd_GetQuote(stockSymbol) {
 
@@ -50,12 +51,13 @@ function amtd_backfromPane(d) {
 /**
  * Call Ameritrade API and get the Option's price.
  *
- * @param {string} the stock's symbol
- * @param {string} CALL or PUT contract
- * @param {number} the strike price of the contract
- * @param {date} the expiry date of the contract
- * @param {string} bid or ask price
+ * @param {string} stockSymbol the stock's symbol
+ * @param {string} contractType "CALL" or "PUT" contract
+ * @param {number} strike the strike price of the contract
+ * @param {date} expDate the expiry date of the contract
+ * @param {string} priceType "B" or "W" representing the bid or ask price
  * @return {number} the option's price
+ * @customfunction
  */
 function amtd_GetOptionPrice(stockSymbol, contractType, strike, expDate, priceType) {
 //Call Ameritrade API and get the Option's price
@@ -112,6 +114,14 @@ function amtd_GetOptionPrice(stockSymbol, contractType, strike, expDate, priceTy
   }
 }
 
+/**
+ * Call the Ameritrade API to get the price history of a stock.
+ *
+ * @param {string} stockSymbol the stock's symbol
+ * @param {date} stockDate the expiry date of the contract
+ * @return {number} the option's price
+ * @customfunction
+ */
 function amtd_GetPriceHistory(stockSymbol, stockDate) {  
   // Call the Ameritrade API to get the price history. 
   // stockDate  is at 6pm
