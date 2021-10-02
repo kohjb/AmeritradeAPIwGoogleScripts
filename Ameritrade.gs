@@ -265,6 +265,24 @@ function amtd_GetTokens(s) {
 }
 
 //*****************************UTILITY FUNCTIONS****************************************************************
+function amtd_getAccessToken() {
+//Get the Access Token from userProperties
+  return userProperties.getProperty("access_token");
+}
+
+function amtd_getAccessTokenTime() {
+//Get the Access Token Time from userProperties
+  return userProperties.getProperty("access_time");
+}
+function amtd_getRefreshToken() {
+//Get the Refresh Token from userProperties
+  return userProperties.getProperty("refresh_token");
+}
+
+function amtd_getRefreshTokenTime() {
+//Get the Refresh Token Time from userProperties
+  return userProperties.getProperty("refresh_time");
+}
 
 function amtd_putTokens(tokensheet, rngAccessToken, rngRefreshToken) {
 //put the access and refresh tokens and their times from userProperties in the spreadsheet
