@@ -9,3 +9,9 @@ function onOpen() {
   currentssheet.addMenu("Ameritrade APIs", menuItems);
 }
 
+
+function test() {
+
+  Logger.log( amtd.amtd_GetQuote("AAPL"));
+
+}

@@ -1,30 +1,13 @@
-
-var apikey = "YourAPIKeyHere....";
+var apikey = "<Your API Key Here...>";
 var userProperties = PropertiesService.getUserProperties();
-
-function amtd_ShowPane() {
-//Open a SidePane asynchronously. The html will return by calling the function amtd_backfromPane
-
-  linkURL = "https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=https%3A%2F%2F127.0.0.1&client_id="+ amtd.apikey +"%40AMER.OAUTHAP";
-  var html = HtmlService.createTemplateFromFile('amtd_SidePane')
-    .evaluate();
-  SpreadsheetApp.getUi().showSidebar(html);
-}
-
-function amtd_backfromPane(d) {
-//Called after user clicks Step 2 button on SidePane, return here with dictionary d
-
-  amtd_GetTokens(d.returnURI);
-  
-}
 
 //******************************MAIN FUNCTIONS*****************************************************************************************
 
 /**
  * Call Ameritrade API to get the closing price of stockSymbol.
  *
- * @param {string} stockSymbol the stock's symbol
- * @return {number} the closing price
+ * @param {string} stockSymbol The symbol of the stock to look up
+ * @return {number} The current price of the stock
  * @customfunction
  */
  function amtd_GetQuote(stockSymbol) {
@@ -51,12 +34,12 @@ function amtd_backfromPane(d) {
 /**
  * Call Ameritrade API and get the Option's price.
  *
- * @param {string} stockSymbol the stock's symbol
- * @param {string} contractType "CALL" or "PUT" contract
- * @param {number} strike the strike price of the contract
- * @param {date} expDate the expiry date of the contract
- * @param {string} priceType "B" or "W" representing the bid or ask price
- * @return {number} the option's price
+ * @param {string} stockSymbol The symbol of the stock to look up
+ * @param {string} contractType "PUT" or "CALL" option
+ * @param {number} strike The Strike Price of the contract
+ * @param {Date} expDate The Expiry Date of the contract
+ * @param {string} priceType "B" or "W" representing Buy or Write/Sell Price of the contract
+ * @return {number} The current price of the stock 
  * @customfunction
  */
 function amtd_GetOptionPrice(stockSymbol, contractType, strike, expDate, priceType) {
@@ -265,24 +248,6 @@ function amtd_GetTokens(s) {
 }
 
 //*****************************UTILITY FUNCTIONS****************************************************************
-function amtd_getAccessToken() {
-//Get the Access Token from userProperties
-  return userProperties.getProperty("access_token");
-}
-
-function amtd_getAccessTokenTime() {
-//Get the Access Token Time from userProperties
-  return userProperties.getProperty("access_time");
-}
-function amtd_getRefreshToken() {
-//Get the Refresh Token from userProperties
-  return userProperties.getProperty("refresh_token");
-}
-
-function amtd_getRefreshTokenTime() {
-//Get the Refresh Token Time from userProperties
-  return userProperties.getProperty("refresh_time");
-}
 
 function amtd_putTokens(tokensheet, rngAccessToken, rngRefreshToken) {
 //put the access and refresh tokens and their times from userProperties in the spreadsheet
@@ -315,4 +280,8 @@ function epochdate_(thisdate) {
   var dDate = Date.parse(thisdate).toString();
 //  var dDate = (thisdate).toString();
   return dDate;     //.toString();
+}
+
+function amtd_Test() {
+  return "Hello World";
 }
