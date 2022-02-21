@@ -1,8 +1,4 @@
-//Deprecated
-// var tokenSheet = "Template";
-// var cellAccessToken = "D19";
-// var cellRefreshToken = "D20";
-
+var userProperties = PropertiesService.getUserProperties();
 
 //******************************MAIN FUNCTIONS*****************************************************************************************
 function test() {
@@ -25,6 +21,18 @@ function test() {
 function amtd_GetQuote(stockSymbol) {
   // Call the Ameritrade API to get the quote. 
   return amtd.amtd_GetQuote(stockSymbol);
+}
+
+/**
+ * Call Ameritrade API to get the closing prices of one or more stockSymbols.
+ *
+ * @param {string} the stock's symbol - comma seperated list of symbols, e.g. "AAPL,/EQ"
+ * @return {string} the closing price - comma seperated list of prices, e.g. "167.30,4369.50"
+ * @customfunction
+  */
+function amtd_GetQuotes(stockSymbols) {
+  // Call the Ameritrade API to get the quote. 
+  return amtd.amtd_GetQuotes(stockSymbols);
 }
 
 /**
@@ -76,11 +84,6 @@ function amtd_backfromPane(d) {
   amtd.amtd_GetTokens(d.returnURI);
 }
 
-//Deprecated
-// function amtd_putTokens() {
-//   amtd.amtd_putTokens(tokenSheet,cellAccessToken,cellRefreshToken);
-// }
-
 function amtd_getAccessToken() {
   return amtd.amtd_getAccessToken()
 }
@@ -100,6 +103,7 @@ function amtd_getRefreshTokenTime() {
   var d = new Date(s)
   return d
 }
+
 
 function showSignonLink(linkURL) {
   var html = '<html><body>Log in to Ameritrade to authenticate your account: Click <a href="'+linkURL+'" target="blank" onclick="google.script.host.close()">'+"here"+'</a></body></html>';

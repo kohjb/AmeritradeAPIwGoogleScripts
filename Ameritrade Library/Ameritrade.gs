@@ -2,7 +2,9 @@
 var apikey = "YourAPIKeyHere....";
 var userProperties = PropertiesService.getUserProperties();
 
-//******************************MAIN FUNCTIONS*****************************************************************************************
+
+
+//****************************** MAIN FUNCTIONS *********************************************
 
 /**
  * Call Ameritrade API to get the closing price of stockSymbol.
@@ -26,9 +28,49 @@ var userProperties = PropertiesService.getUserProperties();
   var json = JSON.parse(contents);
   var stock = json[stockSymbol];
   
-  closePrice = stock["closePrice"];
+  Price = stock["closePrice"];
+  // Other possible options are bidPrice, ask Price, lastPrice, openPrice, highPrice, lowPrice, etc. See Schema.
   
-  return closePrice;
+  return Price;
+}
+
+/**
+ * Call Ameritrade API to get the closing prices of one or more stockSymbols.
+ *
+ * @param {string} the stock's symbol - comma seperated list of symbols, e.g. "AAPL,/EQ"
+ * @return {string} the closing price - comma seperated list of prices, e.g. "167.30,4369.50"
+ */
+ function amtd_GetQuotes(stockSymbols) {
+
+  var authorization = amtd_GetBearerString_();
+  var options = {
+    "method" : "GET",
+    "headers" :  {"Authorization" : authorization},
+    "apikey" : apikey,
+  }
+  var foptions = "?symbol="+stockSymbols;
+  var myurl="https://api.tdameritrade.com/v1/marketdata/quotes"+foptions;
+  var result=UrlFetchApp.fetch(myurl, options);
+
+  //Parse JSON
+  var contents = result.getContentText();  //If need to debug what the returned result is
+  var json = JSON.parse(contents);
+  //return JSON.stringify(json);  //If need to return json as a string
+  //var stock = json[stockSymbol];
+
+  var Prices = ""
+  for (let x in json) {  //Go through each symbol in json, get price depending on assetType
+    if (Prices != "") Prices += ","  //If not the first price, add comma seperator
+    switch (json[x]["assetType"]) {
+      case "EQUITY":
+        Prices += json[x]["lastPrice"]
+        break
+      case "FUTURE":
+        Prices += json[x]["lastPriceInDouble"]
+        break
+    }
+  }
+  return Prices
 }
 
 /**
@@ -363,9 +405,6 @@ function expdate_(d) {
   Logger.log(fd);
   return fd;
 }
-
-
-
 
 
 
